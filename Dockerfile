@@ -3,10 +3,13 @@
 FROM ubuntu:20.04
 
 # Version
-ARG VERSION=0.0.1
+ARG VERSION=0.0.2
 
 # Some environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=America/Toronto \
+    PUID=1000 \
+    PGID=1000 \
     WINDSCRIBE_USERNAME=username \
     WINDSCRIBE_PASSWORD=password \
     WINDSCRIBE_PROTOCOL=stealth \

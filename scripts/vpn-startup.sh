@@ -5,6 +5,10 @@ mkdir -p /dev/net
 mknod /dev/net/tun c 10 200
 chmod 0666 /dev/net/tun
 
+# Create docker user
+groupadd -g $PGID -r docker_group
+useradd -u $PUID -r -g docker_group docker_user
+
 service windscribe-cli start
 if [ ! $? -eq 0 ]; then
     exit 5;
@@ -49,5 +53,5 @@ if [ ! $? -eq 0 ]; then
 fi
 
 # Run the user app in the docker container
-/opt/scripts/app-startup.sh
+su -g docker_group - docker_user -c "/opt/scripts/app-startup.sh"
 
