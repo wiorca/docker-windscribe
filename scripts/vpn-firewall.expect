@@ -1,0 +1,14 @@
+#! /usr/bin/expect -f
+
+set timeout 20
+
+spawn windscribe firewall $env(WINDSCRIBE_FIREWALL)
+
+expect {
+    "Please login to use Windscribe" { send_user "Not logged in\n"; exit 5 }
+    "Invalid firewall mode*" { send_user "Invalid LAN bypass mode\n"; exit 5 }
+    "Firewall Enabled" { send_user "Firewall is on\n"; exit 0 }
+    "Firewall Disabled" { send_user "Firewall is off\n"; exit 0 }
+    eof { send_user "Unexpected EOF\n"; exit 5 }
+}
+

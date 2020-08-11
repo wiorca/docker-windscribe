@@ -1,0 +1,13 @@
+#! /usr/bin/expect -f
+
+set timeout 20
+
+spawn windscribe lanbypass $env(WINDSCRIBE_LANBYPASS)
+
+expect {
+    "Please login to use Windscribe" { send_user "Not logged in\n"; exit 5 }
+    "Invalid LAN bypass mode*" { send_user "Invalid LAN bypass mode\n"; exit 5 }
+    "LAN bybass set to*" { send_user "LAN bypass set\n"; exit 0 }
+    eof { send_user "Unexpected EOF\n"; exit 5 }
+}
+

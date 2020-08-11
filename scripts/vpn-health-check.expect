@@ -1,0 +1,12 @@
+#! /usr/bin/expect -f
+
+set timeout 20
+
+spawn windscribe status
+
+expect {
+    "DISCONNECTED" { send_user "Health BAD\n"; exit 5 }
+    "CONNECTED" { send_user "Health OK\n"; exit 0 }
+    eof { send_user "Health BAD\n"; exit 5 }
+}
+
