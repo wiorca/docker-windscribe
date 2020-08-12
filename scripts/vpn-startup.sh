@@ -7,7 +7,8 @@ chmod 0666 /dev/net/tun
 
 # Create docker user
 groupadd -g $PGID -r docker_group
-useradd -u $PUID -r -g docker_group docker_user
+useradd -u $PUID -r -d /config -g docker_group docker_user
+chown -R docker_user:docker_group /config
 
 service windscribe-cli start
 if [ ! $? -eq 0 ]; then

@@ -2,7 +2,7 @@
 
 ## About the image
 
-Windscribe docker container, as a base for other images.  It does not forward any ports, needs no volumes, and exits immediately (for now).
+Windscribe docker container, as a base for other images.  It does not forward any ports, has onely one volume for the docker_user, and exits immediately by default.
 
 It contains health-checking, and a framework for extending the image however you like to serve your own purposes.  It just handles connecting to windscribe for the moment, and making sure the connection remains active and secure.
 
@@ -14,7 +14,7 @@ There are two script files placed in the /opt/scripts directory that are designe
 
 /opt/scripts/app-startup.sh
 
-This script is designed to start the user application after the connection to the VPN has been established.  This script should never exit, and will be run as docker_user:docker_user, with the UID and GID specified in PUID and GUID.
+This script is designed to start the user application after the connection to the VPN has been established.  This script should never exit, and will be run as docker_user:docker_group, with the UID and GID specified in PUID and GUID.
 
 /opt/scripts/app-health-check.sh
 
@@ -69,6 +69,8 @@ services:
       - WINDSCRIBE_LOCATION=US
       - WINDSCRIBE_LANBYPASS=on
       - WINDSCRIBE_FIREWALL=on
+    volumes:
+      - /location/on/host:/config
     capabilities:
       - NET_ADMIN
     restart: unless-stopped
@@ -76,12 +78,12 @@ services:
 
 ## Parameters
 
-Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate `<external>:<internal>` respectively. For example, `-p 8080:80` would expose port `80` from inside the container to be accessible from the host's IP on port `8080` outside the container.
+Container images are configured using parameters passed at runtime (such as those above).
 
 | Parameter | Examples/Options | Function |
 | :----: | --- | --- |
 | PUID | 1000 | The nummeric user ID to run the application as, and assign to the user docker_user |
-| PGID | 1000 | The numeric group ID to run the application as, and assign to the group docker_user |
+| PGID | 1000 | The numeric group ID to run the application as, and assign to the group docker_group |
 | TZ=Europe/London | The timezone to run the container in |
 | WINDSCRIBE_USERNAME | username | The username used to connect to windscribe |
 | WINDSCRIBE_PASSWORD | password | The password associated with the username |
@@ -91,6 +93,12 @@ Container images are configured using parameters passed at runtime (such as thos
 | WINDSCRIBE_LOCATION | US | The location to connect to, which must be on 'windscribe location' list |
 | WINDSCRIBE_LANBYPASS | on, off | Allow other applications on the docker bridge to connect to this container if on |
 | WINDSCRIBE_FIREWALL | on, off | Enable the windscribe firewall if on, which is recommended. |
+
+## Volumes
+
+| Volume | Example | Function |
+| :----: | --- | --- |
+| /config | /opt/docker/docker-windscribe | The home directory of docker_user, and where configuration files will live |
 
 ## Below are the instructions for updating containers:
 
