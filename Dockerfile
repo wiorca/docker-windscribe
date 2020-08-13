@@ -27,14 +27,14 @@ RUN apt -y update && apt -y dist-upgrade && apt install -y gnupg apt-utils ca-ce
     apt-key adv --keyserver keyserver.ubuntu.com --recv-key FDC247B7 && echo 'deb https://repo.windscribe.com/ubuntu bionic main' | tee /etc/apt/sources.list.d/windscribe-repo.list && \
     echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections && \
     apt -y update && apt -y dist-upgrade && apt install -y windscribe-cli && \
-#    apt install -y curl net-tools iputils-tracepath && \
+    apt install -y curl net-tools iputils-tracepath && \
     apt -y autoremove && apt -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add in scripts for health check and start-up
 ADD scripts /opt/scripts/
 
 # Enable the health check for the VPN and app
-HEALTHCHECK --interval=5m --timeout=10s \
+HEALTHCHECK --interval=5m --timeout=20s \
   CMD /opt/scripts/vpn-health-check.sh || exit 1
 
 # Run the container
