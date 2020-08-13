@@ -76,7 +76,7 @@ services:
       - WINDSCRIBE_FIREWALL=on
     volumes:
       - /location/on/host:/config
-    capabilities:
+    cap-add:
       - NET_ADMIN
     restart: unless-stopped
 ```
