@@ -28,7 +28,6 @@ then
 fi
 
 echo "Network is up"
-exit 0
 
 # Check the app health
 
