@@ -5,7 +5,7 @@
 WINDSCRIBE=$(pgrep windscribe | wc -l )
 if [[ ${WINDSCRIBE} -ne 1 ]]
 then
-	echo "Openvpn process not running"
+	echo "Windscribe process not running"
 	exit 1
 fi
 
