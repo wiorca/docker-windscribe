@@ -3,9 +3,9 @@
 FROM ubuntu:20.04
 
 # Version
-ARG VERSION=0.0.3
+ARG VERSION=0.0.4
 
-# The volume for the docker_user home directory, and where configuration files should be stored
+# The volume for the docker_user home directory, and where configuration files should be stored.
 VOLUME [ "/config" ]
 
 # Some environment variables
@@ -23,11 +23,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
     WINDSCRIBE_FIREWALL=on
 
 # Update ubuntu container, and install the basics, Add windscribe ppa, Install windscribe, and some to be removed utilities
-RUN apt -y update && apt -y dist-upgrade && apt install -y gnupg apt-utils ca-certificates expect iptables && \
+RUN apt -y update && apt -y dist-upgrade && apt install -y gnupg apt-utils ca-certificates expect iptables iputils-ping && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-key FDC247B7 && echo 'deb https://repo.windscribe.com/ubuntu bionic main' | tee /etc/apt/sources.list.d/windscribe-repo.list && \
     echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections && \
     apt -y update && apt -y dist-upgrade && apt install -y windscribe-cli && \
-#    apt install -y curl net-tools iputils-ping iputils-tracepath && \
+#    apt install -y curl net-tools iputils-tracepath && \
     apt -y autoremove && apt -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add in scripts for health check and start-up

@@ -10,7 +10,11 @@ This documentation format is inspired by the great people over at linuxserver.io
 
 ## Extending the image
 
-There are two script files placed in the /opt/scripts directory that are designed to be overwritten:
+There are three script files placed in the /opt/scripts directory that are designed to be overwritten:
+
+/opt/scripts/app-setup.sh
+
+This script is designed to set up the environment for the running application. It is run as root, and should be used to prepare the environment for the running app.
 
 /opt/scripts/app-startup.sh
 
@@ -40,6 +44,7 @@ docker create \
   -e WINDSCRIBE_LOCATION=US \
   -e WINDSCRIBE_LANBYPASS=on \
   -e WINDSCRIBE_FIREWALL=on \
+  -v /location/on/host:/config \
   --cap-add NET_ADMIN \
   --restart unless-stopped \
   wiorca/docker-windscribe
