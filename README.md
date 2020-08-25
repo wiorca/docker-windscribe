@@ -46,7 +46,6 @@ docker create \
   -e WINDSCRIBE_FIREWALL=on \
   -v /location/on/host:/config \
   --dns 8.8.8.8 \
-  --dns 10.255.255.1 \
   --cap-add NET_ADMIN \
   --restart unless-stopped \
   wiorca/docker-windscribe
@@ -80,7 +79,6 @@ services:
       - /location/on/host:/config
     dns:
       - 8.8.8.8
-      - 10.255.255.1
     cap-add:
       - NET_ADMIN
     restart: unless-stopped
