@@ -51,7 +51,7 @@ fi
 
 # Set up the windscribe DNS server
 
-# echo "nameserver 10.255.255.1" >> /etc/resolv.conf
+echo "nameserver 10.255.255.1" >> /etc/resolv.conf
 
 # Connect to the VPN
 

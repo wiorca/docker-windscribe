@@ -3,7 +3,7 @@
 FROM ubuntu:20.04
 
 # Version
-ARG VERSION=0.0.5
+ARG VERSION=0.0.6
 
 # The volume for the docker_user home directory, and where configuration files should be stored.
 VOLUME [ "/config" ]
