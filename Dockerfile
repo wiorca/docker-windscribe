@@ -1,9 +1,9 @@
 
-# Based on Ubuntu 20.04 LTS
-FROM ubuntu:20.04
+# Based on wiorca/docker-mono
+FROM wiorca/docker-mono:latest
 
 # Version
-ARG VERSION=0.0.6
+ARG VERSION=0.0.7
 
 # The volume for the docker_user home directory, and where configuration files should be stored.
 VOLUME [ "/config" ]
