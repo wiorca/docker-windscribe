@@ -6,8 +6,8 @@ mknod /dev/net/tun c 10 200
 chmod 0666 /dev/net/tun
 
 # Create docker user
-groupadd -g $PGID -r docker_group
-useradd -u $PUID -r -d /config -g docker_group docker_user
+usermod -u $PUID docker_user
+groupmod -g $PGID docker_group
 chown -R docker_user:docker_group /config
 
 # Start the windscribe service
@@ -60,6 +60,20 @@ echo "nameserver 10.255.255.1" >> /etc/resolv.conf
 if [ ! $? -eq 0 ]; then
     exit 5;
 fi
+
+# Wait for the connection to come up
+
+i="0"
+/opt/scripts/vpn-health-check.sh
+while [[ ! $? -eq 0 ]]; do
+    sleep 2
+    echo "Waiting for the VPN to connect... $i"
+    i=$[$i+1]
+    if [[ $i -eq "10" ]]; then
+        exit 5
+    fi
+    /opt/scripts/vpn-health-check.sh
+done
 
 # Run the setup script for the environment
 /opt/scripts/app-setup.sh

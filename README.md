@@ -71,10 +71,10 @@ services:
       - WINDSCRIBE_PASSWORD=password
       - WINDSCRIBE_PROTOCOL=stealth
       - WINDSCRIBE_PORT=80
-      - WINDSCRIBE_PORT_FORWARD=9999
       - WINDSCRIBE_LOCATION=US
       - WINDSCRIBE_LANBYPASS=on
       - WINDSCRIBE_FIREWALL=on
+      - VPN_PORT=9999
     volumes:
       - /location/on/host:/config
     dns:
@@ -97,10 +97,10 @@ Container images are configured using parameters passed at runtime (such as thos
 | WINDSCRIBE_PASSWORD | password | The password associated with the username |
 | WINDSCRIBE_PROTOCOL | stealth OR tcp OR udp | The protocol to use when connecting to windscribe, which must be on 'windscribe protocol' list |
 | WINDSCRIBE_PORT | 443, 80, 53 | The port to connect to windscribe over, which must be on 'windscribe port' list for that protocol |
-| WINDSCRIBE_PORT_FORWARD | 9898 | The port you have convigured to forward via windscribe. Not used by this container, but made available |
 | WINDSCRIBE_LOCATION | US | The location to connect to, which must be on 'windscribe location' list |
 | WINDSCRIBE_LANBYPASS | on, off | Allow other applications on the docker bridge to connect to this container if on |
 | WINDSCRIBE_FIREWALL | on, off | Enable the windscribe firewall if on, which is recommended. |
+| VPN_PORT | 9898 | The port you have configured to forward via windscribe. Not used by this container, but made available |
 
 ## Volumes
 
