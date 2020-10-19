@@ -23,7 +23,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     WINDSCRIBE_FIREWALL=on
 
 # Update ubuntu container, and install the basics, Add windscribe ppa, Install windscribe, and some to be removed utilities
-RUN apt -y update && apt -y dist-upgrade && apt install -y gnupg apt-utils ca-certificates expect iptables iputils-ping net-tools iputils-tracepath curl \
+RUN apt -y update && apt -y dist-upgrade && apt install -y gnupg apt-utils ca-certificates expect iptables iputils-ping net-tools iputils-tracepath curl && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-key FDC247B7 && echo 'deb https://repo.windscribe.com/ubuntu bionic main' | tee /etc/apt/sources.list.d/windscribe-repo.list && \
     apt -y update && apt -y dist-upgrade && apt install -y windscribe-cli && \
     echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections && \
