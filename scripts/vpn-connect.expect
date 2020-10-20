@@ -2,7 +2,7 @@
 
 set timeout -1
 
-spawn windscribe connect $WINDSCRIBE_LOCATION
+spawn windscribe connect $env(WINDSCRIBE_LOCATION)
 
 expect {
     "Please login to use Windscribe" { send_user "Not logged in\n"; exit 5 }
