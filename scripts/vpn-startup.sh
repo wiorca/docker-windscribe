@@ -64,7 +64,7 @@ fi
 # Wait for the connection to come up
 
 i="0"
-/opt/scripts/vpn-health-check.sh
+/opt/scripts/vpn-health-check.expect
 while [[ ! $? -eq 0 ]]; do
     sleep 2
     echo "Waiting for the VPN to connect... $i"
@@ -72,7 +72,7 @@ while [[ ! $? -eq 0 ]]; do
     if [[ $i -eq "10" ]]; then
         exit 5
     fi
-    /opt/scripts/vpn-health-check.sh
+    /opt/scripts/vpn-health-check.expect
 done
 
 # Run the setup script for the environment
