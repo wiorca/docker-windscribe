@@ -29,13 +29,5 @@ fi
 
 echo "Network is up"
 
-# Check the app health
-
-/opt/scripts/app-health-check.sh
-
-if [ ! $? -eq 0 ]; then
-    exit 1;
-fi
-
 exit 0
 

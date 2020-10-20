@@ -2,8 +2,16 @@
 # Based on Ubuntu 20.04 LTS
 FROM ubuntu:20.04
 
-# Version
-ARG VERSION=0.0.10
+# Build arguments
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION=0.0.11
+
+# Labels
+LABEL com.wiorca.build-date=$BUILD_DATE \
+      com.wiorca.vcs-url="https://github.com/wiorca/docker-windscribe.git" \
+      com.wiorca.vcs-ref=$VCS_REF \
+      com.wiorca.schema-version=$VERSION
 
 # The volume for the docker_user home directory, and where configuration files should be stored.
 VOLUME [ "/config" ]
@@ -38,8 +46,8 @@ RUN groupadd -r docker_group  && useradd -r -d /config -g docker_group docker_us
 ADD scripts /opt/scripts/
 
 # Enable the health check for the VPN and app
-HEALTHCHECK --interval=5m --timeout=20s \
-  CMD /opt/scripts/vpn-health-check.sh || exit 1
+HEALTHCHECK --interval=5m --timeout=60s \
+  CMD /opt/scripts/health-check.sh || exit 1
 
 # Run the container
 CMD [ "/bin/bash", "/opt/scripts/vpn-startup.sh" ]
