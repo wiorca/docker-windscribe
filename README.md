@@ -44,6 +44,7 @@ docker create \
   -e WINDSCRIBE_LOCATION=US \
   -e WINDSCRIBE_LANBYPASS=on \
   -e WINDSCRIBE_FIREWALL=on \
+  -e VPN_PORT=8080
   -v /location/on/host:/config \
   --dns 8.8.8.8 \
   --cap-add NET_ADMIN \

@@ -75,6 +75,8 @@ while [[ ! $? -eq 0 ]]; do
     /opt/scripts/vpn-health-check.expect
 done
 
+echo "Port forward is $VPN_PORT"
+
 # Run the setup script for the environment
 /opt/scripts/app-setup.sh
 
