@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 # Build arguments
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION=0.0.11
+ARG VERSION=0.0.12
 
 # Labels
 LABEL com.wiorca.build-date=$BUILD_DATE \

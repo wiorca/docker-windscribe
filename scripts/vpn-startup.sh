@@ -81,5 +81,5 @@ echo "Port forward is $VPN_PORT"
 /opt/scripts/app-setup.sh
 
 # Run the user app in the docker container
-su -g docker_group - docker_user -c "/opt/scripts/app-startup.sh"
+su -w VPN_PORT -g docker_group - docker_user -c "/opt/scripts/app-startup.sh"
 
