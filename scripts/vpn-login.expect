@@ -1,13 +1,14 @@
 #! /usr/bin/expect -f
 
 set timeout 20
+set exit_code 0
 
 spawn windscribe login
 
 expect {
-    "Already Logged in" { send_user "Loggin Successful\n"; exit 0 }
+    "Already Logged in" { send_user "Loggin Successful\n"; set exit_code 0 }
     "Username:" { send -- "$env(WINDSCRIBE_USERNAME)\r" }
-    eof { send_user "Unexpected EOF\n"; exit 5 }
+    eof { send_user "Unexpected EOF\n"; set exit_code 5 }
 }
 
 expect "Password:"
@@ -15,8 +16,10 @@ expect "Password:"
 send -- "$env(WINDSCRIBE_PASSWORD)\r"
 
 expect {
-    "API Error*" { send_user "Login Failed\n"; exit 5 }
-    "Logged In" { send_user "Login Successful\n"; exit 0 }
-    eof { send_user "Unexpected EOF\n"; exit 5 }
+    "API Error*" { send_user "Login Failed\n"; set exit_code 5 }
+    "Logged In" { send_user "Login Successful\n"; set exit_code 0 }
+    eof { send_user "Unexpected EOF\n"; set exit_code 5 }
 }
 
+wait
+exit $exit_code

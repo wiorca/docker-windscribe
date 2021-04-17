@@ -1,13 +1,16 @@
 #! /usr/bin/expect -f
 
 set timeout 20
+set exit_code 0
 
 spawn windscribe port $env(WINDSCRIBE_PORT)
 
 expect {
-    "Please login to use Windscribe" { send_user "Not logged in\n"; exit 5 }
-    "Invalid port*" { send_user "Port is invalid\n"; exit 5 }
-    "Default port changed*" { send_user "Port set successfully\n"; exit 0 }
-    eof { send_user "Enexpected EOF\n"; exit 5 }
+    "Please login to use Windscribe" { send_user "Not logged in\n"; set exit_code 5 }
+    "Invalid port*" { send_user "Port is invalid\n"; set exit_code 5 }
+    "Default port changed*" { send_user "Port set successfully\n"; set exit_code 0 }
+    eof { send_user "Enexpected EOF\n"; set exit_code 5 }
 }
 
+wait
+exit $exit_code
