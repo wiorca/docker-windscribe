@@ -1,13 +1,16 @@
 #! /usr/bin/expect -f
 
 set timeout 20
+set exit_code 0
 
 spawn windscribe protocol $env(WINDSCRIBE_PROTOCOL)
 
 expect {
-    "Please login to use Windscribe" { send_user "Not logged in\n"; exit 5 }
-    "Invalid protocol*" { send_user "Protocol is invalid\n"; exit 5 }
-    "Default protocol changed*" { send_user "Protocol set successfully\n"; exit 0 }
-    eof { send_user "Enexpected EOF\n"; exit 5 }
+    "Please login to use Windscribe" { send_user "Not logged in\n"; set exit_code 5 }
+    "Invalid protocol*" { send_user "Protocol is invalid\n"; set exit_code 5 }
+    "Default protocol changed*" { send_user "Protocol set successfully\n"; set exit_code 0 }
+    eof { send_user "Enexpected EOF\n"; set exit_code 5 }
 }
 
+wait
+exit $exit_code

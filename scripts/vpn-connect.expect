@@ -1,14 +1,17 @@
 #! /usr/bin/expect -f
 
 set timeout -1
+set exit_code 0
 
 spawn windscribe connect $env(WINDSCRIBE_LOCATION)
 
 expect {
-    "Please login to use Windscribe" { send_user "Not logged in\n"; exit 5 }
-    "Connected to*" { send_user "VPN connected\n"; exit 0 }
-    "Error adding route*" { send_user "Unable to connect\n"; exit 5 }
-    "Failed to connect" { send_user "Unable to connect\n"; exit 5 }
-    eof { send_user "Unexpected EOF\n"; exit 5 }
+    "Please login to use Windscribe" { send_user "Not logged in\n"; set exit_code 5 }
+    "Connected to*" { send_user "VPN connected\n"; set exit_code 0 }
+    "Error adding route*" { send_user "Unable to connect\n"; set exit_code 5 }
+    "Failed to connect" { send_user "Unable to connect\n"; set exit_code 5 }
+    eof { send_user "Unexpected EOF\n"; set exit_code 5 }
 }
 
+wait
+exit $exit_code
