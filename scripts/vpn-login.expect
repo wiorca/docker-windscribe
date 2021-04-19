@@ -7,17 +7,18 @@ spawn windscribe login
 
 expect {
     "Already Logged in" { send_user "Loggin Successful\n"; set exit_code 0 }
-    "Username:" { send -- "$env(WINDSCRIBE_USERNAME)\r" }
-    eof { send_user "Unexpected EOF\n"; set exit_code 5 }
-}
+    "Username:" { 
+        send -- "$env(WINDSCRIBE_USERNAME)\r"
 
-expect "Password:"
-
-send -- "$env(WINDSCRIBE_PASSWORD)\r"
-
-expect {
-    "API Error*" { send_user "Login Failed\n"; set exit_code 5 }
-    "Logged In" { send_user "Login Successful\n"; set exit_code 0 }
+        expect "Password:"
+        send -- "$env(WINDSCRIBE_PASSWORD)\r"
+        
+        expect {
+            "API Error*" { send_user "Login Failed\n"; set exit_code 5 }
+            "Logged In" { send_user "Login Successful\n"; set exit_code 0 }
+            eof { send_user "Unexpected EOF\n"; set exit_code 5 }
+        }
+    }
     eof { send_user "Unexpected EOF\n"; set exit_code 5 }
 }
 
