@@ -1,11 +1,11 @@
 
-# Based on Ubuntu 20.04 LTS
-FROM ubuntu:20.04
+# Based on Ubuntu 22.04 LTS
+FROM ubuntu:22.04
 
 # Build arguments
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION=0.0.12
+ARG VERSION=0.0.13
 
 # Labels
 LABEL com.wiorca.build-date=$BUILD_DATE \
