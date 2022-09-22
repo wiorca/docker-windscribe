@@ -11,7 +11,7 @@ fi
 
 # Verify windscribe service is happy
 
-/opt/scripts/vpn-health-check.expect
+expect /opt/scripts/vpn-health-check.expect
 
 if [ ! $? -eq 0 ]; then
     exit 1;
